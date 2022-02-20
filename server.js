@@ -18,6 +18,7 @@ const db = getFirestore();
 const app = express();
 const port = process.env.PORT || 3001
 
+// 本地端運行
 // const knex = require('knex')({
 //     client: 'pg',
 //     connection: {

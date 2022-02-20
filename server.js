@@ -27,6 +27,7 @@ const port = process.env.PORT || 3001
 //     }
 // });
 
+// 部署至Heroku
 const knex = require('knex')({
     client: 'pg',
     connection: {

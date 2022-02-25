@@ -100,6 +100,8 @@ app.get("/taipei-data", (req, res) => {
     }).catch(error => console.log(error))
 })
 
+
+
 // webhook
 // const endpointSecret = "whsec_TMVQujNl3kKv4jBb85AHeAeCtvrumxS0";
 app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {

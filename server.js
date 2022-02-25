@@ -2,6 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const fetch = require('node-fetch');
 
+const app = express();
+
+app.use(express.json());
+app.use(cors());
+
 if(process.env.NODE_ENV !== "production") {
     require("dotenv").config()
 }
@@ -44,14 +49,6 @@ const knex = require('knex')({
         }
     }
 });
-
-app.use(express.json());
-app.use(
-    cors({
-        origin: "https://croissant0517.github.io/big-data-company-test", 
-        credentials: true,
-    })
-);
 
 app.get("/", (req, res) => {
     res.send("It is working!")

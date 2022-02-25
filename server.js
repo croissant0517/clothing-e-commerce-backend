@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const fetch = require('node-fetch');
 
 if(process.env.NODE_ENV !== "production") {

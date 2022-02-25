@@ -25,25 +25,25 @@ const app = express();
 const port = process.env.PORT || 3001
 
 // 本地端運行
-const knex = require('knex')({
-    client: 'pg',
-    connection: {
-      host : '127.0.0.1',
-      port : 5432,
-      database : 'overfit'
-    }
-});
-
-// 部署至Heroku
 // const knex = require('knex')({
 //     client: 'pg',
 //     connection: {
-//         connectionString: process.env.DATABASE_URL,
-//         ssl: {
-//             rejectUnauthorized: false
-//         }
+//       host : '127.0.0.1',
+//       port : 5432,
+//       database : 'overfit'
 //     }
 // });
+
+// 部署至Heroku
+const knex = require('knex')({
+    client: 'pg',
+    connection: {
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    }
+});
 
 app.use(express.json());
 app.use(cors());

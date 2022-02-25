@@ -7,9 +7,9 @@ const convertCollectionsSnapshotToMap = (collections) => {
             title,
             imageUrl,
             items: items.map((item, index) => {
-                const { name, imageUrl, price } = item
+                const {id, name, imageUrl, price } = item
                 return ({
-                    key: index,
+                    key: id,
                     collectionId: doc.id,
                     name,
                     imageUrl,
@@ -51,10 +51,10 @@ const convertOrdersSnapshotToMap = (orders) => {
 };
 
 const convertSlidersIdToKey = (sliders) => {
-    const transformedSliders = sliders.map((slider, index) => {
-        const { title, imageUrl } = slider
+    const transformedSliders = sliders.map((slider) => {
+        const {id, title, imageUrl } = slider
         return ({
-            key: index,
+            key: id,
             title,
             imageUrl
         })
@@ -73,9 +73,32 @@ const convertActivitySnapshotToMap = (activity) => {
     return transformedActivity
 };
 
+
+// var perChunk = 2 // items per chunk    
+
+// var inputArray = ['a','b','c','d','e']
+
+const splitArrayIntoChunks = (inputArray, perChunk) => {
+
+    var result = inputArray.reduce((resultArray, item, index) => { 
+        const chunkIndex = Math.floor(index/perChunk)
+
+        if(!resultArray[chunkIndex]) {
+            resultArray[chunkIndex] = [] // start a new chunk
+        }
+
+        resultArray[chunkIndex].push(item)
+
+        return resultArray
+    }, [])
+
+    return result;
+}
+
 module.exports = {
     convertCollectionsSnapshotToMap: convertCollectionsSnapshotToMap,
     convertOrdersSnapshotToMap: convertOrdersSnapshotToMap,
     convertSlidersIdToKey: convertSlidersIdToKey,
     convertActivitySnapshotToMap: convertActivitySnapshotToMap,
+    splitArrayIntoChunks: splitArrayIntoChunks,
 }

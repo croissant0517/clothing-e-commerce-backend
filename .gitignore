@@ -1,2 +1,5 @@
 # 忽略 .DS_Store 檔案
 .DS_Store
+
+# 忽略環境參數
+.env

@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 const app = express();
 
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 // const corsOptions = {
 //     origin: ["https://croissant0517.github.io", "http://localhost:3002/big-data-company-test"],
 //     credentials: true
@@ -17,18 +17,18 @@ app.use(express.json());
 //     next();
 // });
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+//     next();
+// });
 
 
-// if(process.env.NODE_ENV !== "production") {
-//     require("dotenv").config()
-// }
+if(process.env.NODE_ENV !== "production") {
+    require("dotenv").config()
+}
 
 const signin = require("./controllers/admin/signin");
 const users = require("./controllers/admin/users");
@@ -106,11 +106,12 @@ app.get("/search", (req, res) => {search.handleUserSearch(req, res, db)});
 
 
 // big-data-compony-test
-app.get("/taipei-data", cors(), (req, res) => {
+app.get("/taipei-data", (req, res) => {
     let taipeiData = []
     fetch("https://od.moi.gov.tw/api/v1/rest/datastore/301000000A-000082-049", {
+        method: 'GET',
         mode: 'cors',
-        credentials: 'include'
+        headers: { 'Content-Type': 'application/json' }
     })
     .then(res => res.json())
     .then(data => {

@@ -94,7 +94,10 @@ app.get("/search", (req, res) => {search.handleUserSearch(req, res, db)});
 // big-data-compony-test
 app.get("/taipei-data", (req, res) => {
     let taipeiData = []
-    fetch("https://od.moi.gov.tw/api/v1/rest/datastore/301000000A-000082-049")
+    fetch("https://od.moi.gov.tw/api/v1/rest/datastore/301000000A-000082-049", {
+        mode: 'cors',
+        credentials: 'include'
+    })
     .then(res => res.json())
     .then(data => {
         data.result.records.forEach(eachData => {

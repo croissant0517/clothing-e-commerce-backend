@@ -26,7 +26,7 @@ app.use(cors());
 // });
 
 
-if(process.env.NODE_ENV !== "production") {
+if(process.env.NODE_ENV !== "production") {  
     require("dotenv").config()
 }
 
@@ -106,22 +106,36 @@ app.get("/search", (req, res) => {search.handleUserSearch(req, res, db)});
 
 
 // big-data-compony-test
-app.get("/taipei-data", (req, res) => {
+
+app.get("/taipei-data", async(req, res) => {
     let taipeiData = []
-    fetch("https://od.moi.gov.tw/api/v1/rest/datastore/301000000A-000082-049", {
-        method: 'GET',
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' }
-    })
-    .then(res => res.json())
-    .then(data => {
+    try {
+        const response = await fetch('https://od.moi.gov.tw/api/v1/rest/datastore/301000000A-000082-049');
+        const data = await response.json();
         data.result.records.forEach(eachData => {
             if (eachData.district_code[0] + eachData.district_code[1] === "63") {
-              taipeiData.push(eachData)
+                taipeiData.push(eachData)
             }
         })
         res.send(taipeiData)
-    }).catch(error => console.log(error))
+    } catch (error) {
+        console.log(error)
+    }
+
+    // fetch("https://od.moi.gov.tw/api/v1/rest/datastore/301000000A-000082-049", {
+    //     method: 'GET',
+    //     mode: 'cors',
+    //     headers: { 'Content-Type': 'application/json' }
+    // })
+    // .then(res => res.json())
+    // .then(data => {
+    //     data.result.records.forEach(eachData => {
+    //         if (eachData.district_code[0] + eachData.district_code[1] === "63") {
+    //           taipeiData.push(eachData)
+    //         }
+    //     })
+    //     res.send(taipeiData)
+    // }).catch(error => console.log(error))
 })
 
 

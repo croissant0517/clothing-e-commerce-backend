@@ -27,20 +27,15 @@ initializeApp();
 const db = getFirestore();
 const port = process.env.PORT || 3001
 
-// 本地端運行
-// const knex = require('knex')({
-//     client: 'pg',
-//     connection: {
-//       host : '127.0.0.1',
-//       port : 5432,
-//       database : 'overfit'
-//     }
-// });
-
-// 部署至Heroku
 const knex = require('knex')({
     client: 'pg',
-    connection: {
+    connection: (process.env.NODE_ENV !== "production") ? {
+      host : '127.0.0.1',
+      port : 5432,
+      database : 'overfit'
+    }
+    :
+    {
         connectionString: process.env.DATABASE_URL,
         ssl: {
             rejectUnauthorized: false

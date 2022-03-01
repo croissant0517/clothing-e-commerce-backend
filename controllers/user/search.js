@@ -3,7 +3,7 @@ const  {convertCollectionsSnapshotToMap, splitArrayIntoChunks } = require("../..
 const handleUserSearch = async (req, res, db) => {
     const searchField =  req.query.q;
     const currentSendedPage = Number(req.query.page);
-    console.log(currentSendedPage);
+    console.log(searchField);
     
     const collectionsRef = db.collection('collections');
     try {
@@ -19,7 +19,11 @@ const handleUserSearch = async (req, res, db) => {
             return item.name.toLowerCase().includes(searchField.toLowerCase());
         })
         if (filteredItems.length > 0 && filteredItems.length < 7) {
-            res.send(filteredItems)
+            res.send({
+                splitedArray: filteredItems,
+                nextPage: false,
+                totalQuantity: filteredItems.length,
+            })
         } else if (filteredItems.length > 6) {
             const splitedArray =  splitArrayIntoChunks(filteredItems, 6);
             console.log("Array long",splitedArray.length);
@@ -27,12 +31,14 @@ const handleUserSearch = async (req, res, db) => {
             if ((splitedArray.length - 1) === currentSendedPage) {
                 res.send({
                     splitedArray: splitedArray[currentSendedPage],
-                    nextPage: false
+                    nextPage: false,
+                    totalQuantity: filteredItems.length
                 })
             } else {
                 res.send({
                     splitedArray: splitedArray[currentSendedPage],
-                    nextPage: true
+                    nextPage: true,
+                    totalQuantity: filteredItems.length,
                 })
             }
 

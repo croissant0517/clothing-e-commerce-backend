@@ -3,3 +3,5 @@
 
 # 忽略環境參數
 .env
+
+register.js

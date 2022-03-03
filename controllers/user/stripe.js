@@ -17,7 +17,7 @@ const handleCreatePaymentIntent = async (req, res) => {
             clientSecret: paymentIntent.client_secret,
         });
     } catch(error) {
-        console.log(error.message);
+        console.log(error);
     }
 }
 

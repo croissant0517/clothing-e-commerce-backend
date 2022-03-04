@@ -81,7 +81,6 @@ app.get("/search", (req, res) => {search.handleUserSearch(req, res, db)});
 
 
 // webhook
-// const endpointSecret = "whsec_TMVQujNl3kKv4jBb85AHeAeCtvrumxS0";
 app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
     let event = request.body;
 
